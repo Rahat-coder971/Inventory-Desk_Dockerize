@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app-network  
+     
+  backend:
+    build:
+      context: ./server
+      dockerfile: dockerfile
+    ports:
+      - "3000:3000"  
+    container_name: backend
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/your_database_name
+      - PORT=3000
+      - CLIENT_ORIGIN=http://localhost:3001
+    networks:
+      - app-network  
+    depends_on:
+      - mongo
+
+  client:
+    build:
+      context: ./client
+      dockerfile: dockerfile
+    ports:
+      - "3001:80"
+    container_name: client
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+networks:
+   app-network:
+volumes:      
+   mongo_data:
