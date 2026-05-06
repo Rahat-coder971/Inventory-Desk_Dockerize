@@ -1,85 +1,273 @@
 # Three-Tier CRUD Application
 
-A medium-sized CRUD application using:
+A medium-sized CRUD application built using a three-tier architecture.
 
-- Frontend: React + Vite
-- Backend: Node.js + Express
-- Database: MongoDB + Mongoose
+## Tech Stack
 
-The app manages product inventory records with create, read, update, delete, search, and status filtering.
+### Frontend
+- React
+- Vite
+- Nginx
 
-## Project Structure
+### Backend
+- Node.js
+- Express.js
+
+### Database
+- MongoDB
+- Mongoose
+
+The application manages product inventory records with:
+
+- Create product
+- Read products
+- Update product
+- Delete product
+- Search products
+- Status filtering
+
+---
+
+# Project Structure
 
 ```text
 client/   React frontend application
-server/   Node.js, Express API, and MongoDB data layer
+server/   Node.js + Express API and MongoDB data layer
 ```
 
-## Setup
+---
 
-Install frontend dependencies:
+# Local Setup (Without Docker)
+
+## Install Frontend Dependencies
 
 ```bash
 cd client
 npm install
 ```
 
-Install backend dependencies:
+## Install Backend Dependencies
 
 ```bash
 cd ../server
 npm install
 ```
 
-Create `server/.env` from the example if it does not exist:
+---
+
+# Environment Variables
+
+Create `server/.env` from the example file:
 
 ```bash
 cp .env.example .env
 ```
 
-Update `MONGO_URI` if needed. For local MongoDB, the default is:
+Update `MONGO_URI` if needed.
+
+Default local MongoDB connection:
 
 ```text
 mongodb://127.0.0.1:27017/doc_3tier_app
 ```
 
-## Run The App
+---
 
-Start the backend:
+# Run The Application Locally
+
+## Start Backend
 
 ```bash
 cd server
 npm run dev
 ```
 
-Backend health check:
+Backend Health Check:
 
 ```text
 http://localhost:5000/api/health
 ```
 
-Start the frontend in a second terminal:
+---
+
+## Start Frontend
+
+Open another terminal:
 
 ```bash
 cd client
 npm run dev
 ```
 
-Frontend: `http://localhost:5173`
+Frontend URL:
 
-Backend API: `http://localhost:5000/api/products`
+```text
+http://localhost:5173
+```
 
-Optional seed data:
+Backend API:
+
+```text
+http://localhost:5000/api/products
+```
+
+---
+
+# Optional Seed Data
 
 ```bash
 cd server
 npm run seed
 ```
 
-## API Endpoints
+---
 
-- `GET /api/products` - list products
-- `GET /api/products/:id` - get one product
-- `POST /api/products` - create product
-- `PUT /api/products/:id` - update product
-- `DELETE /api/products/:id` - delete product
+# API Endpoints
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | `/api/products` | Get all products |
+| GET | `/api/products/:id` | Get single product |
+| POST | `/api/products` | Create product |
+| PUT | `/api/products/:id` | Update product |
+| DELETE | `/api/products/:id` | Delete product |
+
+---
+
+# Dockerized Setup
+
+The application is fully containerized using Docker and Docker Compose.
+
+## Containers
+
+| Container | Purpose |
+|---|---|
+| client | React frontend served using Nginx |
+| backend | Node.js + Express API |
+| mongo | MongoDB database |
+
+---
+
+# Docker Architecture
+
+```text
+Browser
+   ↓
+Frontend Container (React + Nginx)
+   ↓
+Backend Container (Node.js + Express)
+   ↓
+MongoDB Container
+```
+
+---
+
+# Run Application Using Docker Compose
+
+Make sure Docker Desktop is running.
+
+From the project root directory:
+
+## Start Containers
+
+```bash
+docker compose up --build
+```
+
+Run in detached mode:
+
+```bash
+docker compose up --build -d
+```
+
+---
+
+## Stop Containers
+
+```bash
+docker compose down
+```
+
+---
+
+# Application Ports
+
+| Service | URL |
+|---|---|
+| Frontend | http://localhost:3001 |
+| Backend | http://localhost:3000 |
+| MongoDB | mongodb://localhost:27017 |
+
+---
+
+# Docker Features
+
+- Multi-stage Docker builds
+- Distroless Node.js runtime for backend
+- Nginx container for frontend static file serving
+- Persistent MongoDB Docker volume
+- Custom Docker network for inter-container communication
+
+---
+
+# Docker Volumes
+
+MongoDB data is persisted using Docker volumes.
+
+Volume name:
+
+```text
+mongo_data
+```
+
+This ensures database data remains safe even if containers are removed.
+
+---
+
+# Build Docker Images Individually
+
+## Frontend Image
+
+```bash
+cd client
+docker build -t client_img .
+```
+
+## Backend Image
+
+```bash
+cd server
+docker build -t server_img .
+```
+
+---
+
+# Docker Compose Services
+
+```text
+mongo
+backend
+client
+```
+
+All services communicate using the Docker internal network:
+
+```text
+app-network
+```
+
+---
+
+# Backend Health Check
+
+```text
+http://localhost:3000/api/health
+```
+
+---
+
+# API Example
+
+```text
+http://localhost:3000/api/products
+```
