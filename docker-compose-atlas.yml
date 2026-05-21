@@ -1,0 +1,30 @@
+# this is for mongoatlas communication
+services:
+  backend:
+    build:
+      context: ./server
+      dockerfile: dockerfile
+    ports:
+      - "3000:3000"
+    container_name: backend
+    environment:
+      - MONGO_URI=mongodb+srv://rahatEc2:t5ilicLkvKONHmqu@cluster0.wizw17n.mongodb.net/inventorydb?retryWrites=true&w=majority&appName=Cluster0
+      - PORT=3000
+      - CLIENT_ORIGIN=http://localhost:3001
+    networks:
+      - app-network
+
+  client:
+    build:
+      context: ./client
+      dockerfile: dockerfile
+    ports:
+      - "3001:80"
+    container_name: client
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+networks:
+  app-network:
