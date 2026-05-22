@@ -1,9 +1,7 @@
-# this is for mongoatlas communication
 services:
+
   backend:
-    build:
-      context: ./server
-      dockerfile: dockerfile
+    image: rahathusain22/backend:latest
     ports:
       - "3000:3000"
     container_name: backend
@@ -15,9 +13,7 @@ services:
       - app-network
 
   client:
-    build:
-      context: ./client
-      dockerfile: dockerfile
+    image: rahathusain22/frontend:latest
     ports:
       - "3001:80"
     container_name: client
