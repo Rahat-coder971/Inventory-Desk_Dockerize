@@ -164,8 +164,7 @@ function App() {
             <Boxes size={24} />
           </div>
           <div>
-            <h1>Inventory CI/CD Rolling Deployment 🚀</h1>
-         <p>ASG + Jenkins + Docker + ALB working successfully</p>
+            <h1>Inventory</h1>
           </div>
         </div>
         <button className="refresh-button" onClick={loadProducts} title="Refresh products">
