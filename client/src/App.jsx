@@ -164,8 +164,8 @@ function App() {
             <Boxes size={24} />
           </div>
           <div>
-            <h1>Inventory</h1>
-            <p>Product catalog and stock control</p>
+            <h1>Inventory Updated</h1>
+            <p>Product catalog and stock control updated </p>
           </div>
         </div>
         <button className="refresh-button" onClick={loadProducts} title="Refresh products">
@@ -177,7 +177,7 @@ function App() {
       <section className="stats-grid" aria-label="Inventory summary">
         <div className="metric">
           <Boxes size={22} />
-          <span>Total Items</span>
+          <span>Total Itemsssss</span>
           <strong>{products.length}</strong>
         </div>
         <div className="metric">
